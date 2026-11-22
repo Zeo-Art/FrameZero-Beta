@@ -1171,3 +1171,43 @@ body.fz-modal-open .bottom-nav,body.fz-keyboard-open .bottom-nav{display:none!im
 @media(prefers-reduced-transparency:reduce){
  .hud-pilot-holo,.bottom-nav,.topbar,#modal-root .modal-backdrop{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 }
+
+/* v44 — JARVIS-inspired fine orbital instrumentation around the pilot portrait.
+   Animate only compositor-friendly transforms; no animated blur, shadows or borders. */
+.hud-pilot-holo .pilot-holo-portrait{isolation:isolate}
+.hud-pilot-holo .pilot-orbit{
+  box-sizing:border-box!important;
+  box-shadow:none!important;
+  filter:none!important;
+  pointer-events:none!important;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  transform-origin:50% 50%;
+}
+.hud-pilot-holo .pilot-orbit-one{
+  border-width:1px!important;
+  border-style:solid!important;
+  border-color:rgba(76,244,252,.82) transparent rgba(76,244,252,.27) rgba(76,244,252,.72)!important;
+  animation:fz44OrbitForward 19s linear infinite!important;
+}
+.hud-pilot-holo .pilot-orbit-two{
+  inset:6px!important;
+  border-width:1px!important;
+  border-style:dashed!important;
+  border-color:rgba(127,255,228,.55) rgba(127,255,228,.14) transparent rgba(127,255,228,.42)!important;
+  animation:fz44OrbitReverse 27s linear infinite!important;
+}
+.hud-pilot-holo .pilot-portrait-core{
+  border-width:1px!important;
+  box-shadow:0 0 0 2px rgba(2,40,65,.72),0 0 12px rgba(12,238,255,.20)!important;
+}
+.hud-pilot-holo .pilot-orbit-node{
+  width:5px!important;height:5px!important;
+  box-shadow:0 0 5px rgba(72,255,230,.55)!important;
+  animation:none!important;
+}
+@keyframes fz44OrbitForward{to{transform:rotate(360deg)}}
+@keyframes fz44OrbitReverse{to{transform:rotate(-360deg)}}
+@media(prefers-reduced-motion:reduce){
+ .hud-pilot-holo .pilot-orbit-one,.hud-pilot-holo .pilot-orbit-two{animation:none!important}
+}
