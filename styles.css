@@ -1144,3 +1144,30 @@ body{overflow-x:hidden!important;transform:none!important;filter:none!important;
 body.fz-modal-open .bottom-nav,body.fz-keyboard-open .bottom-nav{display:none!important}
 @media(max-width:480px){.bottom-nav{width:calc(100% - 12px)!important;bottom:calc(6px + env(safe-area-inset-bottom,0px))!important}}
 @media(prefers-reduced-motion:reduce){.hud-pilot-holo .pilot-live-timer.pilot-live-enter,.hud-pilot-holo .pilot-live-timer.pilot-live-exit{animation:none!important}}
+
+/* v43 — restored liquid glass, bounded blur layers for Safari/WebKit.
+   Do not animate backdrop-filter or the glass panel itself. */
+.hud-pilot-holo,.panel,.card,.hud-module,.bottom-nav,.modal,.topbar{
+ background-color:rgba(5,34,54,.48)!important;
+ background-image:linear-gradient(132deg,rgba(151,239,252,.13) 0%,rgba(23,100,126,.13) 31%,rgba(3,20,39,.53) 100%)!important;
+ border-color:rgba(121,232,246,.48)!important;
+ box-shadow:inset 0 1px 0 rgba(211,255,255,.30),inset 1px 0 0 rgba(157,241,255,.12),0 13px 28px rgba(0,7,18,.29),0 0 16px rgba(30,220,232,.09)!important;
+}
+/* Real glass on the three large focal surfaces only. */
+.hud-pilot-holo,.bottom-nav,.topbar{
+ -webkit-backdrop-filter:blur(9px) saturate(145%)!important;
+ backdrop-filter:blur(9px) saturate(145%)!important;
+}
+/* Content cards use transparent, layered glass paint rather than many expensive blur passes. */
+.panel,.card,.hud-module{ -webkit-backdrop-filter:none!important;backdrop-filter:none!important; }
+/* Modal: one backdrop capture, no nested field blur. */
+#modal-root .modal-backdrop{background:rgba(0,8,20,.66)!important;-webkit-backdrop-filter:blur(5px)!important;backdrop-filter:blur(5px)!important}
+#modal-root .modal{background-color:rgba(5,30,49,.83)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* Keep decorative sheen static, never repaint the blur every frame. */
+.hud-pilot-holo::before,.hud-pilot-holo::after,.panel::before,.card::before{animation:none!important}
+/* Ensure bottom navigation stays above pages but below modal windows. */
+.bottom-nav{z-index:100!important}
+#modal-root{z-index:1000!important}
+@media(prefers-reduced-transparency:reduce){
+ .hud-pilot-holo,.bottom-nav,.topbar,#modal-root .modal-backdrop{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+}
