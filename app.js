@@ -9,7 +9,7 @@ function applyGlass(level){
  root.style.setProperty('--glass-opacity',(0.94-glassLevel*0.0088).toFixed(3));
  root.style.setProperty('--glass-light-opacity',(0.18-glassLevel*0.0013).toFixed(3));
  root.style.setProperty('--glass-border-opacity',(0.27+glassLevel*0.0024).toFixed(3));
- root.style.setProperty('--glass-blur',Math.round(12+glassLevel*0.26)+'px');
+ root.style.setProperty('--glass-blur','0px');
  const value=document.getElementById('glassValue');if(value)value.textContent=glassLevel+' %';
  const slider=document.getElementById('glassSlider');if(slider&&Number(slider.value)!==glassLevel)slider.value=glassLevel;
 }

@@ -1,12 +1,11 @@
-/* FRAME//ZERO v41 — versioned, consistent offline shell. */
-const CACHE='frame-zero-v41-stable';
+/* FRAME//ZERO v42: consistent offline-first shell; no mixed-version stale files. */
+const CACHE='frame-zero-v42-duo-stable';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./icon-180.png','./icon-192.png','./icon-512.png','./icon-1024.png'];
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',event=>event.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))),self.clients.claim()])));
-self.addEventListener('fetch',event=>{
- const req=event.request;if(req.method!=='GET'||new URL(req.url).origin!==self.location.origin)return;
- // Always attempt fresh HTML/CSS/JS first; offline fallback is still available.
- const isShell=req.mode==='navigate'||/\.(?:js|css|html)$/.test(new URL(req.url).pathname);
- if(isShell){event.respondWith(fetch(req).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(req,copy)))}return response}).catch(()=>caches.match(req).then(cached=>cached||caches.match('./index.html'))));return}
- event.respondWith(caches.match(req).then(cached=>cached||fetch(req).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(req,copy)))}return response})));
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('frame-zero-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{
+ const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==self.location.origin)return;
+ const u=new URL(r.url),isShell=r.mode==='navigate'||/\.(?:js|css|html)$/.test(u.pathname);
+ if(isShell){e.respondWith(fetch(r).then(res=>{if(res.ok){const copy=res.clone();e.waitUntil(caches.open(CACHE).then(c=>c.put(r,copy)))}return res}).catch(()=>caches.match(r).then(x=>x||caches.match('./index.html'))));return}
+ e.respondWith(caches.match(r).then(x=>x||fetch(r)));
 });

@@ -1120,3 +1120,27 @@ body.fz-modal-open .bottom-nav,body.fz-keyboard-open .bottom-nav{opacity:0!impor
 #modal-root .modal-backdrop{z-index:10001!important}
 body.fz-modal-open .bottom-nav,body.fz-keyboard-open .bottom-nav{visibility:hidden!important;pointer-events:none!important}
 @media(prefers-reduced-motion:reduce){.hud-pilot-holo .pilot-live-timer.pilot-live-enter,.hud-pilot-holo .pilot-live-timer.pilot-live-exit{animation:none!important}}
+
+/* v42 — stable iPhone Duo layout: no perpetual panel repaints */
+html{overflow-x:hidden!important;scroll-behavior:auto!important}
+body{overflow-x:hidden!important;transform:none!important;filter:none!important;perspective:none!important}
+.topbar,.hud-pilot-holo,.panel,.card,.more-link,.hud-module,.bottom-nav,.modal,.modal-backdrop{
+ animation:none!important;transition:none!important;filter:none!important;will-change:auto!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+/* Glass appearance is achieved with translucent gradients, not live GPU blur. */
+.hud-pilot-holo,.panel,.card,.hud-module,.bottom-nav,.modal{background-color:rgba(4,28,45,.94)!important}
+.scanlines,.pilot-circuit,.pilot-glass-layer,.pilot-orbit,.pilot-orbit-node,.pilot-beacon,
+.hud-pilot-holo::before,.hud-pilot-holo::after,.panel::before,.card::before{animation:none!important;filter:none!important}
+*::before,*::after{animation:none!important;filter:none!important}
+/* Keep only short, lightweight timer enter/exit animations. */
+.hud-pilot-holo .pilot-live-timer.pilot-live-enter{animation:fzPilotAppear .36s ease-out both!important}
+.hud-pilot-holo .pilot-live-timer.pilot-live-exit{animation:fzPilotDisappear .3s ease-in both!important}
+.hud-pilot-holo .pilot-live-orbit,.hud-pilot-holo .pilot-live-orbit-a,.hud-pilot-holo .pilot-live-orbit-b{animation:none!important;filter:none!important}
+.bottom-nav{position:fixed!important;left:50%!important;right:auto!important;bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;transform:translateX(-50%)!important;z-index:100!important;max-width:850px!important;width:calc(100% - 20px)!important;box-sizing:border-box!important}
+#modal-root{position:relative;z-index:1000}
+#modal-root .modal-backdrop{position:fixed!important;inset:0!important;z-index:1001!important;background:rgba(0,8,18,.96)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#modal-root .modal{max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;overscroll-behavior:contain}
+body.fz-modal-open .bottom-nav,body.fz-keyboard-open .bottom-nav{display:none!important}
+@media(max-width:480px){.bottom-nav{width:calc(100% - 12px)!important;bottom:calc(6px + env(safe-area-inset-bottom,0px))!important}}
+@media(prefers-reduced-motion:reduce){.hud-pilot-holo .pilot-live-timer.pilot-live-enter,.hud-pilot-holo .pilot-live-timer.pilot-live-exit{animation:none!important}}
