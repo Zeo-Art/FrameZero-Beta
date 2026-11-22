@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#02060b">
+<meta name="description" content="FRAME//ZERO – dein futuristischer Modellbau-Hangar">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<title>FRAME//ZERO // Command Center</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="scanlines"></div>
+<header class="topbar">
+  <button class="brand" data-page="dashboard" aria-label="Zur Kommandozentrale"><img src="icon-192.png" alt=""><span>FRAME<span class="cyan">//ZERO</span><small>MECHA BUILD CONTROL SYSTEM</small></span></button>
+  <div class="topright"><span class="online-dot"></span><span id="clock">SYSTEM ONLINE</span><button class="icon-btn" id="profileShortcut" title="Profil">◉</button></div>
+</header>
+<div class="app-layout">
+<main id="main">
+  <section class="page active" id="page-dashboard"></section>
+  <section class="page" id="page-projects"></section>
+  <section class="page" id="page-timer"></section>
+  <section class="page" id="page-diary"></section>
+  <section class="page" id="page-hangar"></section>
+  <section class="page" id="page-paint"></section>
+  <section class="page" id="page-tools"></section>
+  <section class="page" id="page-profile"></section>
+  <section class="page" id="page-settings"></section>
+  <section class="page" id="page-more"></section>
+</main>
+</div>
+<nav class="bottom-nav" aria-label="Hauptnavigation">
+  <button class="nav active" data-page="dashboard" aria-label="Home"><span>⌂</span><small>Home</small></button>
+  <button class="nav" data-page="projects" aria-label="Projekte"><span>▦</span><small>Projekte</small></button>
+  <button class="nav" data-page="hangar" aria-label="Hangar"><span>⬡</span><small>Hangar</small></button>
+  <button class="nav" data-page="more" aria-label="Mehr"><span>☰</span><small>Mehr</small></button>
+</nav>
+<div id="modal-root"></div>
+<div id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
